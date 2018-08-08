@@ -1,4 +1,4 @@
-package util;
+package dbutil;
 
 public class DBColumn {
 	private String name;
