@@ -46,14 +46,13 @@ public class DatabaseUtil {
 	
 	private static boolean createDatabase(String name) {
 		try{  
-			Connection conn = DBConnectionFactory.getDbConnection();
+			Connection conn = DBConnectionFactory.getServerConnection();
 		
 			Statement stmt = conn.createStatement();  
 			
 			String sql = "CREATE DATABASE "+name; 
 			stmt.executeUpdate(sql);
-			conn.setCatalog(DB_NAME);
-			//con.close();
+			conn.close();
 			return true;
 		}catch(Exception e){ 
 			System.out.println("Db creation skipped"); 
