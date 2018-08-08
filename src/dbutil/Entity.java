@@ -1,4 +1,4 @@
-package db.annotation;
+package dbutil;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;

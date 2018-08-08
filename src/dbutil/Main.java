@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import db.annotation.Entity;
 import dbutil.ClassExtractor;
 import dbutil.DBColumn;
 import dbutil.DatabaseUtil;
@@ -18,7 +17,7 @@ public class Main {
 		
 		List<String> modelList = null;
 		
-		String packageName = "db.models";
+		String packageName = "models";
 		
 		try {
 			modelList = ClassExtractor.getClassNamesFromPackage(packageName);	

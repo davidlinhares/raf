@@ -14,12 +14,10 @@ public class DatabaseUtil {
 	public static void createTable(String name, List<DBColumn> columns) {
 		createDatabase(DB_NAME);
 		
-		Connection conn = null;
-	    Statement stmt = null;
 	    try{
-	    	conn = DBConnectionFactory.getDbConnection();
+	    	Connection conn = DBConnectionFactory.getDbConnection();
 	    	
-	    	stmt = conn.createStatement();
+	    	Statement stmt = conn.createStatement();
 	      
 	    	String sql = "CREATE TABLE IF NOT EXISTS "+ name +" (id INTEGER not NULL, PRIMARY KEY ( id ))";
 	    	
@@ -60,16 +58,6 @@ public class DatabaseUtil {
 		}
 		
 	}
-
-	private static String generateAttrSQL(List<DBColumn> columns) {
-		String result = " ";
-		for(DBColumn column : columns) {
-			if(!column.getName().equalsIgnoreCase("id")) {
-				result += "ADD COLUMN "+column.getName()+" "+column.getType()+",";
-			}
-		}
-		return result.replaceAll(",$", ";");
-	}
 	
 	private static boolean createDatabase(String name) {
 		try{  
@@ -85,24 +73,6 @@ public class DatabaseUtil {
 			System.out.println("Db creation skipped"); 
 		}
 		return false;
-	}
-	
-	private void runQuery(String q) {
-		try{  
-			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/sonoo","root","root"
-			);  
-			
-			Statement stmt=con.createStatement();  
-			ResultSet rs=stmt.executeQuery("select * from emp");  
-			while(rs.next()) {
-				System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
-			}  
-			//con.close();  
-		}catch(Exception e){ 
-			System.out.println(e); 
-		}  
 	}
 
 }
