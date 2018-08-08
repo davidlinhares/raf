@@ -3,6 +3,7 @@ package dbutil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -18,30 +19,56 @@ public class DatabaseUtil {
 	    try{
 	    	conn = DBConnectionFactory.getDbConnection();
 	    	
-	    	System.out.println("Connected database successfully...");
-	      
-	    	System.out.println("Creating table in given database...");
 	    	stmt = conn.createStatement();
 	      
-	    	String sql = "CREATE TABLE IF NOT EXISTS "+ name +" (id INTEGER not NULL, "+ generateAttrSQL(columns) +"PRIMARY KEY ( id ))"; 
-	    	System.out.println(sql);
-
+	    	String sql = "CREATE TABLE IF NOT EXISTS "+ name +" (id INTEGER not NULL, PRIMARY KEY ( id ))";
+	    	
 	    	stmt.executeUpdate(sql);
+	    	
 	    	System.out.println("Created table in given database...");
-	   }catch(Exception se){
-	      //Handle errors for JDBC
-	      se.printStackTrace();
-	   }
+	    }catch(Exception e){
+	    	System.out.println("Table exists");
+	   	}
+	    
+	    addColumns(columns, name);
 	}
 	
+	private static void addColumns(List<DBColumn> columns, String name) {
+		try {
+			for(DBColumn col : columns) {
+				addColumn(col, name);
+	    	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void addColumn(DBColumn col, String tableName) throws SQLException {
+		Connection conn = DBConnectionFactory.getDbConnection();
+		Statement stmt = conn.createStatement();
+		
+		String sql = "SELECT IF(count(*) = 1, 'exist','not_exist') AS result " + 
+				"FROM information_schema.columns " + 
+				"WHERE table_schema = '"+DB_NAME+"' " + 
+				"AND table_name = '"+tableName+"' " + 
+				"AND column_name = '"+col.getName()+"';";
+		
+		ResultSet rs = stmt.executeQuery(sql);
+		if(rs.next() && rs.getString("result").equals("not_exist")) {
+			sql = "ALTER TABLE "+tableName+" ADD COLUMN "+col.getName()+" "+col.getType();
+			stmt.executeUpdate(sql);
+		}
+		
+	}
+
 	private static String generateAttrSQL(List<DBColumn> columns) {
-		String result = "";
+		String result = " ";
 		for(DBColumn column : columns) {
 			if(!column.getName().equalsIgnoreCase("id")) {
-				result += column.getName()+" "+column.getType()+", ";
+				result += "ADD COLUMN "+column.getName()+" "+column.getType()+",";
 			}
 		}
-		return result;
+		return result.replaceAll(",$", ";");
 	}
 	
 	private static boolean createDatabase(String name) {
