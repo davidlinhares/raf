@@ -23,7 +23,7 @@ public class DatabaseUtil {
 	    	System.out.println("Creating table in given database...");
 	    	stmt = conn.createStatement();
 	      
-	    	String sql = "CREATE TABLE "+ name +" (id INTEGER not NULL, "+ generateAttrSQL(columns) +"PRIMARY KEY ( id ))"; 
+	    	String sql = "CREATE TABLE IF NOT EXISTS "+ name +" (id INTEGER not NULL, "+ generateAttrSQL(columns) +"PRIMARY KEY ( id ))"; 
 	    	System.out.println(sql);
 
 	    	stmt.executeUpdate(sql);
