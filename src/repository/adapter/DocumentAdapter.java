@@ -2,8 +2,6 @@ package repository.adapter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 import org.bson.Document;
 
@@ -20,8 +18,6 @@ public class DocumentAdapter <T extends Object> {
 		}
 		return documentAdapter;
 	}
-	
-	private T t;
 	
 	public Document getDocument(T object) {
 		Document document = new Document();
