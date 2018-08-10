@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import controller.FrontController;
 import controllerRequest.InputRequest;
 import controllerRequest.SearchDataRequest;
 
@@ -29,7 +28,7 @@ public class Main
         playGame.addActionListener(new ActionListener() { 
         	  public void actionPerformed(ActionEvent e) { 
         		  InputRequest request = new SearchDataRequest();
-        		  FrontController.searchData(request);
+        		 // FrontController.searchData(request);
         	  } 
         	} );
 

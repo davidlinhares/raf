@@ -1,19 +1,20 @@
 package controller;
 
-import controllerRequest.InputRequest;
+import repository.facade.Repository;
 
 public abstract class Controller {
-	
-	public static void AddData() {
 
+	@SuppressWarnings("rawtypes")
+	protected Repository repository;
+
+	@SuppressWarnings("unchecked")
+	public <T> void add(T object) {
+		this.repository.save(object);
 	}
 
-	public static void searchData(InputRequest request) {
-		SearchController.SEARCH_DATA(request);
-	}
-
-	public static void addEntityToDb() {
-
+	@SuppressWarnings("unchecked")
+	public <T> T find(String name) {
+		return (T) this.repository.find("name", name);
 	}
 
 }
