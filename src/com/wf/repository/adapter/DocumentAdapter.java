@@ -4,6 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
+import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
+import com.mongodb.util.JSON;
 
 public class DocumentAdapter <T extends Object> {
 	private DocumentAdapter() {
@@ -20,6 +25,11 @@ public class DocumentAdapter <T extends Object> {
 	}
 	
 	public Document getDocument(T object) {
+		Gson gson = new Gson();
+		String json = gson.toJson(object);
+		BasicDBObject basicDocument = (BasicDBObject) JSON.parse(json);
+		System.out.println(basicDocument);
+		/*
 		Document document = new Document();
 		Field[] fields = object.getClass().getDeclaredFields();
 		for(Field field : fields) {
@@ -41,6 +51,8 @@ public class DocumentAdapter <T extends Object> {
 			}
 			
 		}
+		*/
+		Document document = new Document(basicDocument);
 		document.append("_class", object.getClass().getName());
 		return document;
 	}
@@ -50,6 +62,12 @@ public class DocumentAdapter <T extends Object> {
 		try {
 			Class cls = Class.forName(document.getString("_class"));
 			object = cls.newInstance();
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(document);
+			object = gson.fromJson(json, object.getClass());
+			
+			/*
 			Field[] fields = object.getClass().getDeclaredFields();
 			for(Field field : fields) {
 				try {
@@ -75,6 +93,7 @@ public class DocumentAdapter <T extends Object> {
 					System.out.println(e);
 				}
 			}
+			*/
 		} catch(Exception e) {
 			//ClassNotFoundException
 			System.out.println(e);

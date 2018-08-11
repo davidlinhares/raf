@@ -18,5 +18,6 @@
 	<classpathentry kind="lib" path="library/mongodb-driver-sync-3.8.0.jar"/>
 	<classpathentry kind="lib" path="library/mysql-connector-java-8.0.12.jar"/>
 	<classpathentry kind="lib" path="library/guava-26.0-jre.jar"/>
+	<classpathentry kind="lib" path="library/gson-2.8.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
