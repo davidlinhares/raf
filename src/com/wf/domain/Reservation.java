@@ -1,6 +1,6 @@
 package com.wf.domain;
 
-public abstract class Reservation {
+public class Reservation {
 	private Rentee rentee;
 	private Rental rental;
 	private Double discount;
