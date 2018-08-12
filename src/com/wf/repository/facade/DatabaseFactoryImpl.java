@@ -7,21 +7,21 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.wf.configuration.ConfigurationReaderStatic;
 
-public class DatabaseManager implements Database {
-	private static DatabaseManager databaseManager = null;
+public class DatabaseFactoryImpl implements DatabaseFactory {
+	private static DatabaseFactoryImpl databaseManager = null;
 	
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
 	//private static List<MongoCollection> collections;
 	
-	private DatabaseManager() {
+	private DatabaseFactoryImpl() {
 		super();
 	}
 	
-	public static synchronized DatabaseManager getInstance() {
+	public static synchronized DatabaseFactoryImpl getInstance() {
 		if(databaseManager == null) {
-			databaseManager = new DatabaseManager();
+			databaseManager = new DatabaseFactoryImpl();
 		}
 		return databaseManager;
 	}
