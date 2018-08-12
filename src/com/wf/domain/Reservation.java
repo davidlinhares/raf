@@ -3,8 +3,11 @@ package com.wf.domain;
 public class Reservation {
 	private Rentee rentee;
 	private Rental rental;
-	private Double discount;
-	private int reservationTimeslot;
+	private ReservationDescription reservationDescription;
+	private Double tax = 0.0;
+	private Double fee = 0.0;
+	private Double discount = 0.0;
+	private int reservationTimeslot = 0;
 	
 	public Rentee getRentee() {
 		return rentee;
@@ -20,6 +23,30 @@ public class Reservation {
 
 	public void setRental(Rental rental) {
 		this.rental = rental;
+	}
+
+	public ReservationDescription getReservationDescription() {
+		return reservationDescription;
+	}
+
+	public void setReservationDescription(ReservationDescription reservationDescription) {
+		this.reservationDescription = reservationDescription;
+	}
+
+	public Double getTax() {
+		return tax;
+	}
+
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+	
+	public Double getFee() {
+		return fee;
+	}
+
+	public void setFee(Double fee) {
+		this.fee = fee;
 	}
 
 	public Double getDiscount() {
@@ -40,7 +67,7 @@ public class Reservation {
 	
 	public Double getTotalPrice() {
 		Double totalPrice = 0.0;
-		totalPrice = (reservationTimeslot * rental.getBasePrice()) - getDiscount();
+		totalPrice = (((reservationTimeslot * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee) - getDiscount();
 		return totalPrice;
 	}
 }
