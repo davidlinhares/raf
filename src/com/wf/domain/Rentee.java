@@ -1,7 +1,7 @@
 package com.wf.domain;
 
 @Attendant
-public class Rentee {
+public abstract class Rentee {
 	private String code;
 	private String name;
 	
@@ -17,4 +17,6 @@ public class Rentee {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public abstract Rentee clone();
 }

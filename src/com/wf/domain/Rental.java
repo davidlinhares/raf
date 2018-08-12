@@ -12,4 +12,6 @@ public abstract class Rental {
 	public Double getReservationTimeslot() {
 		return reservationTimeslot;
 	}
+	
+	public abstract Rental clone();
 }

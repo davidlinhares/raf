@@ -70,4 +70,16 @@ public class Reservation {
 		totalPrice = (((reservationTimeslot * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee) - getDiscount();
 		return totalPrice;
 	}
+	
+	public Reservation clone() {
+		Reservation clone = new Reservation();
+		clone.rentee = rentee.clone();
+		clone.rental = rental.clone();
+		clone.reservationDescription = reservationDescription.clone();
+		clone.tax = tax;
+		clone.fee = fee;
+		clone.discount = discount;
+		clone.reservationTimeslot = reservationTimeslot;
+		return clone;
+	}
 }
