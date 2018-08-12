@@ -1,5 +1,7 @@
 package com.wf.domain;
 
+import com.wf.domain.annotation.Attendant;
+
 @Attendant
 public abstract class Rentee {
 	private String code;

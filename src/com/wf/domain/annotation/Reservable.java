@@ -1,4 +1,4 @@
-package com.wf.domain;
+package com.wf.domain.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

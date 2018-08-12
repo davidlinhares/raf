@@ -1,5 +1,7 @@
 package com.wf.domain;
 
+import com.wf.domain.annotation.Reservable;
+
 @Reservable
 public abstract class Rental {
 	private Double priceRate = 0.0;
