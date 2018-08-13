@@ -1,6 +1,6 @@
 package com.wf.domain;
 
-public class Reservation {
+public class Reservation extends AReservation {
 	private Rentee rentee;
 	private Rental rental;
 	private ReservationDescription reservationDescription;
@@ -10,7 +10,7 @@ public class Reservation {
 	private int reservationTimeslot = 0;
 	
 	public Rentee getRentee() {
-		return rentee;
+		return this.rentee;
 	}
 
 	public void setRentee(Rentee rentee) {
@@ -65,12 +65,6 @@ public class Reservation {
 		this.reservationTimeslot = reservationTimeslot;
 	}
 	
-	public Double getTotalPrice() {
-		Double totalPrice = 0.0;
-		totalPrice = (((reservationTimeslot * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee) - getDiscount();
-		return totalPrice;
-	}
-	
 	public Reservation clone() {
 		Reservation clone = new Reservation();
 		clone.rentee = rentee.clone();
@@ -82,4 +76,13 @@ public class Reservation {
 		clone.reservationTimeslot = reservationTimeslot;
 		return clone;
 	}
+
+	@Override
+	public Double getTotalPrice() {
+		//Double totalPrice = 0.0;
+		//totalPrice = (((getReservationTimeslot() * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee) - getDiscount();
+		//return totalPrice;
+		return ((getReservationTimeslot() * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee;
+	}
+	
 }
