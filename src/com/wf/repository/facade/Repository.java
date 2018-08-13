@@ -75,14 +75,14 @@ public interface Repository <T extends Object> {
 		    	   
 		       }
 		};
-		DatabaseFactoryImpl.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find().forEach(convertBlock);
+		DatabaseFactory.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find().forEach(convertBlock);
 		return objects;
 	}
 
 	public default T find(String field, String id) {
 		try {
 			if(getObjectOfT() != null) {
-				Document document = DatabaseFactoryImpl.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find(Filters.eq(field, id)).first();
+				Document document = DatabaseFactory.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find(Filters.eq(field, id)).first();
 				if(document != null) {
 					try {
 						DocumentAdapter<T> documentAdapter = DocumentAdapter.getInstance();
@@ -109,8 +109,8 @@ public interface Repository <T extends Object> {
 	public default void update(String field, String id, T newObject) {
 		T object = find(field, id);
 		if(object != null) {
-			Document document = DatabaseFactoryImpl.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find(Filters.eq(field, id)).first();
-			DatabaseFactoryImpl.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).replaceOne(Filters.eq("_id", new ObjectId(document.get("_id").toString())), DocumentAdapter.getInstance().getDocument(newObject));
+			Document document = DatabaseFactory.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).find(Filters.eq(field, id)).first();
+			DatabaseFactory.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).replaceOne(Filters.eq("_id", new ObjectId(document.get("_id").toString())), DocumentAdapter.getInstance().getDocument(newObject));
 		} else {
 			save(newObject);
 		}
@@ -120,7 +120,7 @@ public interface Repository <T extends Object> {
 	public default void save(T object) {
 		//Alternative way of getting the object type for matching the database.
 		//DatabaseManager.getInstance().getCollection(object.getClass().getSimpleName()).insertOne(DocumentAdapter.getInstance().getDocument(object));
-		DatabaseFactoryImpl.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).insertOne(DocumentAdapter.getInstance().getDocument(object));
+		DatabaseFactory.getInstance().getCollection(getObjectOfT().getClass().getSimpleName()).insertOne(DocumentAdapter.getInstance().getDocument(object));
 	}
 	
 }
