@@ -14,6 +14,7 @@ public class ConfigurationReaderStatic {
 		dbConfig.put("port", ConfigurationPropertiesReader.getInstance().getPropertiesValues("port"));
 		dbConfig.put("user", ConfigurationPropertiesReader.getInstance().getPropertiesValues("user"));
 		dbConfig.put("password", ConfigurationPropertiesReader.getInstance().getPropertiesValues("password"));
+		dbConfig.put("logging", ConfigurationPropertiesReader.getInstance().getPropertiesValues("logging"));
 		return dbConfig;
 	}
 }

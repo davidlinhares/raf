@@ -1,5 +1,8 @@
 package com.wf.repository.facade;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
@@ -13,6 +16,7 @@ public class DatabaseFactory implements IDatabaseFactory {
 	private MongoClient mongoClient;
 	private MongoDatabase database;
 	private MongoCollection<Document> collection;
+	private Level logginglevel = Level.INFO;
 	//private static List<MongoCollection> collections;
 	
 	private DatabaseFactory() {
@@ -42,8 +46,8 @@ public class DatabaseFactory implements IDatabaseFactory {
 			System.out.println("Exception: " + e);
 		}
 		
-		//Logger mongoLogger = Loggers.getLogger( "org.mongodb.driver" );
-		//mongoLogger.setLevel(Level.SEVERE)
+		Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+		mongoLogger.setLevel(getLoggingLevel());
 		return mongoClient;
 	}
 	
@@ -74,6 +78,20 @@ public class DatabaseFactory implements IDatabaseFactory {
 	public MongoCollection<Document> getCollection(String name) {
 		collection = getDatabase().getCollection(name);
 		return collection;
+	}
+
+	@Override
+	public Level getLoggingLevel() {
+		try {
+			if(ConfigurationReaderStatic.getDatabaseConfiguration().get("logging") != null && 
+					Level.parse(ConfigurationReaderStatic.getDatabaseConfiguration().get("logging")) != null) {
+				logginglevel = Level.parse(ConfigurationReaderStatic.getDatabaseConfiguration().get("logging"));
+			}
+		} catch (Exception e) {
+			//IOException
+			System.out.println(e);
+		}
+		return logginglevel;
 	}
 	
 }
