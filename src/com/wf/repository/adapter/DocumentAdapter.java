@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.util.JSON;
 
-public class DocumentAdapter <T extends Object> {
+public class DocumentAdapter <T extends Object> implements Adapter {
 	private DocumentAdapter() {
 		super();
 	}
@@ -24,7 +24,8 @@ public class DocumentAdapter <T extends Object> {
 		return documentAdapter;
 	}
 	
-	public Document getDocument(T object) {
+	@Override
+	public Document getDocument(Object object) {
 		Gson gson = new Gson();
 		String json = gson.toJson(object);
 		BasicDBObject basicDocument = (BasicDBObject) JSON.parse(json);
@@ -57,6 +58,7 @@ public class DocumentAdapter <T extends Object> {
 		return document;
 	}
 	
+	@Override
 	public T getObject(Document document) {
 		Object object = new Object();
 		try {
@@ -100,4 +102,5 @@ public class DocumentAdapter <T extends Object> {
 		}
 		return (T) object;
 	}
+	
 }
