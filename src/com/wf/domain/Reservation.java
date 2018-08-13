@@ -82,7 +82,7 @@ public class Reservation extends AReservation {
 		//Double totalPrice = 0.0;
 		//totalPrice = (((getReservationTimeslot() * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee) - getDiscount();
 		//return totalPrice;
-		return ((getReservationTimeslot() * rental.getReservationTimeslot()) * rental.getPriceRate()) + tax + fee;
+		return ((getReservationTimeslot() * rental.getRentalTimeslot()) * rental.getPriceRate()) + tax + fee;
 	}
 	
 }
